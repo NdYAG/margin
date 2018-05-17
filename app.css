@@ -1,0 +1,74 @@
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  margin: 0 1rem;
+  background-color: #24292e;
+  font-family: 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans GB', STHeiti,
+    'Microsoft YaHei', 'Wenquanyi Micro Hei', sans-serif;
+}
+#app {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+button,
+.Button {
+  -webkit-appearance: none;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1;
+  margin: 0;
+  position: relative;
+  font: inherit;
+  text-align: center;
+  white-space: normal;
+  outline: 0;
+  user-select: none;
+  text-decoration: none;
+
+  padding: 0.9em 1.25em;
+  color: #9f7be1;
+  background: transparent;
+  border: 1px solid rgba(159, 123, 225, 0.8);
+  border-radius: 0.3em;
+}
+.Controls {
+  margin: 1rem 0;
+  text-align: center;
+}
+.Controls > * + * {
+  margin-top: 1rem;
+}
+.Controls__colors,
+.Controls__export {
+  display: none;
+}
+.Controls--active .Controls__colors {
+  display: block;
+}
+.Controls--active .Controls__export {
+  display: inline-block;
+}
+.Controls__upload {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+}
+.Controls__upload input[type='file'] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+}
+.Controls__upload button {
+  pointer-events: none;
+}
