@@ -17,7 +17,7 @@ function drawImage(canvas, image, options) {
     iOS Safari "Canvas area exceeds the maximum limit (width * height > 16777216)"
   */
   const max = 4096
-  let canvasSize = Math.min(Math.max(width, height), max)
+  const canvasSize = Math.min(Math.max(width, height), max)
   if (canvasSize === max) {
     if (ratio > 1) {
       width = canvasSize
@@ -27,23 +27,26 @@ function drawImage(canvas, image, options) {
       height = canvasSize
     }
   }
-  let margin = canvasSize * options.container.margin
-  canvasSize += 2 * margin
+  const margin = canvasSize * options.container.margin
   canvas.width = canvasSize
   canvas.height = canvasSize
 
   const context = canvas.getContext('2d')
-  let xpos, ypos
+  let xpos, ypos, w, h
   if (ratio > 1) {
+    w = canvasSize - 2 * margin
+    h = w / ratio
     xpos = margin
-    ypos = (canvasSize - height) / 2
+    ypos = (canvasSize - h) / 2
   } else {
-    xpos = (canvasSize - width) / 2
+    h = canvasSize - 2 * margin
+    w = h * ratio
+    xpos = (canvasSize - w) / 2
     ypos = margin
   }
   context.fillStyle = options.background
   context.fillRect(0, 0, canvasSize, canvasSize)
-  context.drawImage(image, xpos, ypos, width, height)
+  context.drawImage(image, xpos, ypos, w, h)
 
   const scaleRatio = options.container.width / canvasSize
   canvas.style = `
