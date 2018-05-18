@@ -1,39 +1,51 @@
 import { validFileType } from './file.js'
 
 const config = {
-  background: 'black',
+  background: 'white',
   container: {
-    width: Math.min(screen.width, 640) - 32
+    width: Math.min(screen.width, 640) - 32,
+    margin: 0.05
   }
 }
 const app = document.querySelector('#app')
 let canvas
 
 function drawImage(canvas, image, options) {
-  const { width, height } = image
+  let { width, height } = image
   const ratio = width / height
   /*
     iOS Safari "Canvas area exceeds the maximum limit (width * height > 16777216)"
-   */
-  const canvasSize = Math.min(Math.max(width, height), 4096)
+  */
+  const max = 4096
+  let canvasSize = Math.min(Math.max(width, height), max)
+  if (canvasSize === max) {
+    if (ratio > 1) {
+      width = canvasSize
+      height = canvasSize / ratio
+    } else {
+      width = canvasSize * ratio
+      height = canvasSize
+    }
+  }
+  let margin = canvasSize * options.container.margin
+  canvasSize += 2 * margin
   canvas.width = canvasSize
   canvas.height = canvasSize
 
   const context = canvas.getContext('2d')
-  let xpos, ypos, scaleRatio
+  let xpos, ypos
   if (ratio > 1) {
-    xpos = 0
+    xpos = margin
     ypos = (canvasSize - height) / 2
-    scaleRatio = options.container.width / width
   } else {
     xpos = (canvasSize - width) / 2
-    ypos = 0
-    scaleRatio = options.container.width / height
+    ypos = margin
   }
   context.fillStyle = options.background
   context.fillRect(0, 0, canvasSize, canvasSize)
-  context.drawImage(image, xpos, ypos)
+  context.drawImage(image, xpos, ypos, width, height)
 
+  const scaleRatio = options.container.width / canvasSize
   canvas.style = `
 transform: scale(${scaleRatio});
 transform-origin: 0 0
