@@ -100,7 +100,7 @@ document.querySelector('.Export').addEventListener('click', e => {
 })
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').then(
+  navigator.serviceWorker.register('sw.js').then(
     registration => {
       console.log(
         'ServiceWorker registration successful with scope: ',

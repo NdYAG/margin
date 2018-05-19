@@ -2,11 +2,11 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open('v1').then(cache => {
       return cache.addAll([
-        '/',
-        '/index.html',
-        '/app.css',
-        '/app.js',
-        '/file.js'
+        '/margin',
+        '/margin/index.html',
+        '/margin/app.css',
+        '/margin/app.js',
+        '/margin/file.js'
       ])
     })
   )
